@@ -1,3 +1,4 @@
+import { claimSourceSchema } from '@/schemas/claim-source.schema';
 import { AppConfig } from '@/schemas/env.schema';
 import { CreateClaimSourceArgs } from '@/types/create-claim-source.args';
 import {
@@ -68,7 +69,7 @@ export class MattrService {
       .pipe(
         map((res) => ({
           ...res,
-          data: res.data,
+          data: claimSourceSchema.parse(res.data),
         })),
       )
       .pipe(
