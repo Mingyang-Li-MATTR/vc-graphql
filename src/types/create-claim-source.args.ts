@@ -1,10 +1,12 @@
-import { Field, ObjectType } from '@nestjs/graphql';
+import { Field, InputType } from '@nestjs/graphql';
+import { CreateClaimSourceInput } from './create-claim-source.input';
 import { ViiConfig } from './vii-config';
 
-@ObjectType()
+@InputType()
 export class CreateClaimSourceArgs {
   @Field(() => ViiConfig, { nullable: false })
   config!: ViiConfig;
 
-  body!: unknown;
+  @Field(() => CreateClaimSourceInput, { nullable: false })
+  data!: CreateClaimSourceInput;
 }

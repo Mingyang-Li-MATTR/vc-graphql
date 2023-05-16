@@ -1,3 +1,4 @@
+import { CreateClaimSourceArgs } from '@/types/create-claim-source.args';
 import { GetClaimSourcesArgs } from '@/types/get-claim-sources.args';
 import {
   GetClaimSourcesResBody,
@@ -37,6 +38,31 @@ export class MattrService {
         catchError((error: AxiosError) => {
           this.logger.error(
             `getClaimSources - ${JSON.stringify(error.response.data)}`,
+          );
+          throw 'An error happened!';
+        }),
+      );
+    return await firstValueFrom(res);
+  }
+
+  public async createClaimSource(
+    args: CreateClaimSourceArgs,
+  ): Promise<AxiosResponse<any>> {
+    const url = `${args.config.baseUrl}/core/v1/claimsources`;
+    const body = args.data;
+    const config = this.buildConfig(args.config.token);
+    const res = this.http
+      .post(url, body, config)
+      .pipe(
+        map((res) => ({
+          ...res,
+          data: res.data,
+        })),
+      )
+      .pipe(
+        catchError((error: AxiosError) => {
+          this.logger.error(
+            `createClaimSource - ${JSON.stringify(error.response.data)}`,
           );
           throw 'An error happened!';
         }),
