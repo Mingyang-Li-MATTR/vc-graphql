@@ -11,7 +11,6 @@ export class ClaimSourceResolver {
   public async getClaimSources(
     @Args('args') args: GetClaimSourcesArgs,
   ): Promise<ClaimSource[]> {
-    console.log(args);
     const res = await this.mattrService.getClaimSources(args);
     return res.data.data;
   }

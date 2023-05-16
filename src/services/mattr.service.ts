@@ -1,5 +1,8 @@
 import { GetClaimSourcesArgs } from '@/types/get-claim-sources.args';
-import { GetClaimSourcesResBody } from '@/types/get-claim-sources.res.body';
+import {
+  GetClaimSourcesResBody,
+  getClaimSourcesResBodySchema,
+} from '@/types/get-claim-sources.res.body';
 import { HttpService } from '@nestjs/axios';
 import { Injectable, Logger } from '@nestjs/common';
 import { AxiosError, AxiosRequestConfig, AxiosResponse } from 'axios';
@@ -27,6 +30,7 @@ export class MattrService {
       .pipe(
         map((res) => ({
           ...res,
+          data: getClaimSourcesResBodySchema.parse(res.data),
         })),
       )
       .pipe(
