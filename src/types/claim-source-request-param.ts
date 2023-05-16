@@ -1,4 +1,10 @@
-import { ObjectType } from '@nestjs/graphql';
+import { Field, InputType } from '@nestjs/graphql';
+import { Type } from 'class-transformer';
+import { ClaimSourceRequestParamInput } from './claim-source-request-param.input';
 
-@ObjectType()
-export class ClaimSourceRequestParam {}
+@InputType()
+export class ClaimSourceRequestParam {
+  @Field(() => ClaimSourceRequestParamInput)
+  @Type(() => ClaimSourceRequestParamInput)
+  email?: ClaimSourceRequestParamInput | null;
+}

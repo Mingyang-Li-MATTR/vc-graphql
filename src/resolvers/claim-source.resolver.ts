@@ -15,8 +15,12 @@ export class ClaimSourceResolver {
 
   @Mutation(() => ClaimSource)
   public async createClaimSource(@Args('args') args: CreateClaimSourceArgs) {
-    const res = await this.mattrService.createClaimSource(args);
-    console.log(`res -> ${JSON.stringify(res.data)}`);
-    return { id: '' };
+    // const res = await this.mattrService.createClaimSource(args);
+    // console.log(`res -> ${JSON.stringify(res.data)}`);
+    const res: ClaimSource = {
+      id: 'some-uuid',
+      ...args.data,
+    };
+    return res;
   }
 }
