@@ -1,3 +1,4 @@
+import { AppConfig } from '@/schemas/env.schema';
 import { CreateClaimSourceArgs } from '@/types/create-claim-source.args';
 import { GetClaimSourcesArgs } from '@/types/get-claim-sources.args';
 import {
@@ -6,6 +7,7 @@ import {
 } from '@/types/get-claim-sources.res.body';
 import { HttpService } from '@nestjs/axios';
 import { Injectable, Logger } from '@nestjs/common';
+import { ConfigService } from '@nestjs/config';
 import { AxiosError, AxiosRequestConfig, AxiosResponse } from 'axios';
 import { catchError, firstValueFrom, map } from 'rxjs';
 
@@ -13,7 +15,18 @@ import { catchError, firstValueFrom, map } from 'rxjs';
 export class MattrService {
   private logger = new Logger(MattrService.name);
 
-  constructor(private readonly http: HttpService) {}
+  constructor(
+    private readonly http: HttpService,
+    private readonly config: ConfigService<AppConfig>,
+  ) {}
+
+  private get URL() {
+    return this.config.get('MATTR_BASE_URL');
+  }
+
+  private get TOKEN() {
+    return this.config.get('MATTR_AUTH_TOKEN');
+  }
 
   public buildConfig(token: string): AxiosRequestConfig {
     return {
@@ -24,7 +37,7 @@ export class MattrService {
   public async getClaimSources(
     args: GetClaimSourcesArgs,
   ): Promise<AxiosResponse<GetClaimSourcesResBody>> {
-    const url = `${args.config.baseUrl}/v1/claimsources`;
+    const url = `${this.URL}/v1/claimsources`;
     const config = this.buildConfig(args.config.token);
     const res = this.http
       .get(url, config)
@@ -48,7 +61,7 @@ export class MattrService {
   public async createClaimSource(
     args: CreateClaimSourceArgs,
   ): Promise<AxiosResponse<any>> {
-    const url = `${args.config.baseUrl}/core/v1/claimsources`;
+    const url = `${this.URL}/core/v1/claimsources`;
     const body = args.data;
     const config = this.buildConfig(args.config.token);
     const res = this.http
