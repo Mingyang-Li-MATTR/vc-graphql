@@ -1,6 +1,5 @@
 import { AppConfig } from '@/schemas/env.schema';
 import { CreateClaimSourceArgs } from '@/types/create-claim-source.args';
-import { GetClaimSourcesArgs } from '@/types/get-claim-sources.args';
 import {
   GetClaimSourcesResBody,
   getClaimSourcesResBodySchema,
@@ -34,11 +33,11 @@ export class MattrService {
     };
   }
 
-  public async getClaimSources(
-    args: GetClaimSourcesArgs,
-  ): Promise<AxiosResponse<GetClaimSourcesResBody>> {
+  public async getClaimSources(): Promise<
+    AxiosResponse<GetClaimSourcesResBody>
+  > {
     const url = `${this.URL}/v1/claimsources`;
-    const config = this.buildConfig(args.config.token);
+    const config = this.buildConfig(this.TOKEN);
     const res = this.http
       .get(url, config)
       .pipe(
@@ -63,7 +62,7 @@ export class MattrService {
   ): Promise<AxiosResponse<any>> {
     const url = `${this.URL}/core/v1/claimsources`;
     const body = args.data;
-    const config = this.buildConfig(args.config.token);
+    const config = this.buildConfig(this.TOKEN);
     const res = this.http
       .post(url, body, config)
       .pipe(

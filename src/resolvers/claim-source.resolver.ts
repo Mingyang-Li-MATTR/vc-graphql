@@ -1,7 +1,6 @@
 import { MattrService } from '@/services/mattr.service';
 import { ClaimSource } from '@/types/claim-source';
 import { CreateClaimSourceArgs } from '@/types/create-claim-source.args';
-import { GetClaimSourcesArgs } from '@/types/get-claim-sources.args';
 import { Args, Mutation, Query, Resolver } from '@nestjs/graphql';
 
 @Resolver()
@@ -9,10 +8,8 @@ export class ClaimSourceResolver {
   constructor(private readonly mattrService: MattrService) {}
 
   @Query(() => [ClaimSource])
-  public async getClaimSources(
-    @Args('args') args: GetClaimSourcesArgs,
-  ): Promise<ClaimSource[]> {
-    const res = await this.mattrService.getClaimSources(args);
+  public async getClaimSources(): Promise<ClaimSource[]> {
+    const res = await this.mattrService.getClaimSources();
     return res.data.data;
   }
 
