@@ -3,6 +3,7 @@ import { Type } from 'class-transformer';
 import { IsUrl } from 'class-validator';
 import { ClaimSourceAuthInput } from './claim-source-auth.input';
 import { ClaimSourceRequestParam } from './claim-source-request-param';
+import { ClaimSourceRequestParamInput } from './claim-source-request-param.input';
 
 @InputType()
 export class CreateClaimSourceInput {
@@ -19,7 +20,7 @@ export class CreateClaimSourceInput {
   @Type(() => ClaimSourceAuthInput)
   authorization!: ClaimSourceAuthInput;
 
-  @Field(() => ClaimSourceRequestParam)
-  @Type(() => ClaimSourceRequestParam)
-  requestParameters!: ClaimSourceRequestParam;
+  @Field(() => [ClaimSourceRequestParamInput])
+  // @Type(() => ClaimSourceRequestParamInput[])
+  requestParameters!: ClaimSourceRequestParamInput[];
 }

@@ -7,6 +7,12 @@ export class ClaimSourceRequestParamInput {
     nullable: false,
   })
   @Type(() => String)
+  fieldName!: string;
+
+  @Field(() => String, {
+    nullable: false,
+  })
+  @Type(() => String)
   mapFrom?: string | null;
 
   @Field(() => String, {

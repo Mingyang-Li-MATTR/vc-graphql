@@ -1,6 +1,7 @@
 import { Module } from '@nestjs/common';
 import { ApolloDriverConfig, ApolloDriver } from '@nestjs/apollo';
 import { GraphQLModule } from '@nestjs/graphql';
+import GraphQLJSON from 'graphql-type-json';
 
 @Module({
   imports: [
@@ -8,6 +9,7 @@ import { GraphQLModule } from '@nestjs/graphql';
       driver: ApolloDriver,
       playground: true,
       autoSchemaFile: true,
+      resolvers: { JSON: GraphQLJSON },
     }),
   ],
 })
